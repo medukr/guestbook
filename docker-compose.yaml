@@ -1,0 +1,43 @@
+version: '3.2'
+
+services:
+#  database:
+#    image: postgres:11-alpine
+#    environment:
+#      POSTGRES_USER: main
+#      POSTGRES_PASSWORD: main
+#      POSTGRES_DB: main
+#    ports: [5432]
+
+  database:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+#    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1111
+      MYSQL_USER: main
+      MYSQL_PASSWORD: main
+      MYSQL_DATABASE: guestbook
+    ports:
+      - 5432:3306
+    container_name: guestbook_mysql_server
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - database
+    ports:
+      - 8778:80
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 1111
+    depends_on:
+      - database
+    container_name: guestbook_phpmyadmin
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+    container_name: guestbook_redis
