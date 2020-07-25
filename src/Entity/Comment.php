@@ -107,7 +107,10 @@ class Comment
         return $this;
     }
 
-    public function serCreateAtValue()
+    /**
+     * @ORM\PrePersist
+    */
+    public function setCreateAtValue()
     {
         $this->createAt = new \DateTime();
     }
