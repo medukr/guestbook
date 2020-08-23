@@ -90,7 +90,7 @@ class Admin implements UserInterface
         return $this;
     }
 
-    public function _toString():string
+    public function __toString():string
     {
         return $this->username;
     }
