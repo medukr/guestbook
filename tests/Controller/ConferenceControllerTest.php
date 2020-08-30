@@ -32,4 +32,21 @@ class ConferenceControllerTest extends WebTestCase
         $this->assertSelectorExists('div:contains("There are 1 comments")');
 
     }
+
+    public function testCommentSubmission()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/conference/amsterdam-2019');
+        $client->submitForm('Submit', [
+            'comment_form[author]' => 'fabien',
+            'comment_form[text]' => 'Some feedback from an automated functional test',
+            'comment_form[email]' => 'me@automat.ed',
+            'comment_form[photo]' => dirname(__DIR__, 2) . '/public/images/under-constraction.gif'
+        ]);
+
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertSelectorExists('div:contains("There are 2 comments")');
+
+    }
 }
