@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
         $admin = new Admin();
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setUsername('admin');
-        $admin->setPassword($this->encoderFactory->getEncoder(Admin::class)->encodePassword('admin', null));
+        $admin->setPassword($this->encoderFactory->getEncoder(Admin::class)->encodePassword('123456', null));
 
         $manager->flush();
     }
